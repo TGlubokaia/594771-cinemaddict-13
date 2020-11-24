@@ -6,7 +6,7 @@ import {createFilmCardTemplate} from "./view/film-card.js";
 import {createBtnShowMoreTemplate} from "./view/button-show-more.js";
 import {createFilmsExtraTemplate} from "./view/films-extra.js";
 import {createFilmDetailsTemplate} from "./view/film-popup.js";
-import {createFilmCommentTemplate} from "./view/film-comment.js"
+import {createFilmCommentTemplate} from "./view/film-comment.js";
 
 const render = (container, template, place, number) => {
   for (let i = 0; i < number; i++) {

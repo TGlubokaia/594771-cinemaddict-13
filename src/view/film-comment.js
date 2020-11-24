@@ -12,4 +12,4 @@ export const createFilmCommentTemplate = function () {
     </p>
   </div>
 </li>`;
-}
+};
