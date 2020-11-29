@@ -45,27 +45,26 @@ export const directors = [
 ];
 
 export const writters = [
-  `J. J. Abrams`,
-  `Woody Allen`,
-  `Paul Thomas Anderson`,
-  `Wes Anderson`,
+  `J. J. Abrams, Woody Allen`,
+  `Woody Allen, Wes Anderson`,
+  `Paul Thomas Anderson, Jim Jarmusch`,
+  `Wes Anderson, Chris Columbus`,
   `Tim Burton`,
-  `James Cameron`,
-  `Chris Columbus`,
-  `Jim Jarmusch`,
+  `James Cameron, J. J. Abrams`,
+  `Chris Columbus, J. J. Abrams, Woody Allen`,
+  `Jim Jarmusch, Akira Kurosawa`,
   `Akira Kurosawa`
 ];
 
 export const actors = [
-  `Robert De Niro`,
-  `Jack Nicholson`,
-  `Meryl Streep`,
-  `Daniel Day-Lewis`,
-  `Ingrid Bergman`,
-  `Cate Blanchett`,
-  `Jodie Foster`,
-  `Morgan Freeman`,
-  `Sam Rockwell`
+  `Robert De Niro, Daniel Day-Lewis, Morgan Freeman`,
+  `Jack Nicholson, Meryl Streep`,
+  `Meryl Streep, Sam Rockwell`,
+  `Daniel Day-Lewis, Sam Rockwell`,
+  `Cate Blanchett, Daniel Day-Lewis`,
+  `Jodie Foster, Sam Rockwell`,
+  `Morgan Freeman, Meryl Streep, Ingrid Bergman`,
+  `Sam Rockwell, Jack Nicholson, Meryl Streep`
 ];
 
 export const releaseDate = [
@@ -136,7 +135,20 @@ export const users = [
 
 export const ratings = [
   `8`,
+  `8.1`,
   `8.3`,
+  `8.5`,
+  `8.7`,
   `7.5`,
-  `8.9`
+  `8.9`,
+  `7.7`,
+  `7,8`,
+  `7.1`,
+  `7.4`
 ];
+
+export const ageRating = [
+  `18+`,
+  `16+`,
+  `10+`
+]

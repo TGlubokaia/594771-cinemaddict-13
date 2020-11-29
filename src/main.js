@@ -8,6 +8,8 @@ import {createFilmsExtraTemplate} from "./view/films-extra.js";
 import {createFilmDetailsTemplate} from "./view/film-popup.js";
 import {createFilmCommentTemplate} from "./view/film-comment.js";
 import {generateFilmCard} from "./mockup/film-info-mockup.js";
+import {getRandomElement} from "./utils.js";
+import {commentsArr} from "./mockup/film-info-mockup.js";
 
 const NUMBER_OF_FILM_CARDS = 20;
 const NUMBER_OF_EXTRA = 2;
@@ -29,6 +31,7 @@ render(siteMainElement, createFilmsListTemplate(), `beforeend`);
 const siteFilmsListElement = document.querySelector(`.films-list`);
 const siteFilmsListContainerElement = siteFilmsListElement.querySelector(`.films-list__container`);
 
+
 for (let i = 0; i < NUMBER_OF_FILM_CARDS; i++) {
   render(siteFilmsListContainerElement, createFilmCardTemplate(films[i]), `beforeend`);
 }
@@ -37,9 +40,8 @@ render(siteFilmsListContainerElement, createBtnShowMoreTemplate(), `beforeend`);
 render(siteFilmsListContainerElement, createFilmsExtraTemplate(`Top rated`), `beforeend`);
 render(siteFilmsListContainerElement, createFilmsExtraTemplate(`Most commented`), `beforeend`);
 
-const extraBlocks = document.querySelectorAll(`.films-list--extra`);
-
 /*
+const extraBlocks = document.querySelectorAll(`.films-list--extra`);
 const renderExtra = function (blocks, extrasNumber, cardsNumber) {
   for (let i = 0; i < extrasNumber; i++) {
     render(blocks[i].querySelector(`.films-list__container`), siteFilmsListContainerElement, `beforeend`, cardsNumber);
@@ -47,11 +49,14 @@ const renderExtra = function (blocks, extrasNumber, cardsNumber) {
 };
 renderExtra(extraBlocks, NUMBER_OF_EXTRA, 2);
 */
-
 /*
 const footerElement = document.querySelector(`.footer`);
-render(footerElement, createFilmDetailsTemplate(), `afterend`, 1);
+render(footerElement, createFilmDetailsTemplate(films[0]), `afterend`);
 
 const filmCommentList = document.querySelector(`.film-details__comments-list`);
-render(filmCommentList, createFilmCommentTemplate(), `beforeend`, 5);
+
+
+for (let i = 0; i < commentsArr.length; i++) {
+  render(filmCommentList, createFilmCommentTemplate(commentsArr[i]), `beforeend`);
+}
 */

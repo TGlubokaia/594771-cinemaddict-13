@@ -15,8 +15,8 @@ import {postersUrls} from "./data-mockup.js";
 import {commentTexts} from "./data-mockup.js";
 import {emojis} from "./data-mockup.js";
 import {users} from "./data-mockup.js";
-import {ratings} from "./data-mockup.js"
-
+import {ratings} from "./data-mockup.js";
+import {ageRating} from "./data-mockup.js";
 
 const generateDescription = function () {
   let description = [];
@@ -24,6 +24,13 @@ const generateDescription = function () {
     description.push(getRandomElement(descriptionSentences));
   }
   return description;
+};
+
+const generateShortDescription = function () {
+  let description = generateDescription().join(` `);
+  if (description.length > 140) {
+    return description = description.substring(0, 138) + `...`;
+  } return description
 };
 
 const generateComment = function () {
@@ -35,7 +42,7 @@ const generateComment = function () {
   };
 };
 
-const generateComments = function () {
+export const generateComments = function () {
   let comments = [];
   for (let i = 0; i < getRandomNumber(0, 5); i++) {
     comments.push(generateComment());
@@ -43,15 +50,35 @@ const generateComments = function () {
   return comments;
 };
 
+const generateGenres = function () {
+  let genresArr = [];
+  for (let i = 1; i < getRandomNumber(1, 3); i++) {
+    genresArr.push(getRandomElement(genres));
+  }
+  return genresArr;
+}
+
+export const commentsArr = generateComments();
+
 export const generateFilmCard = function () {
    return {
     title: getRandomElement(titles), 
+    originaltitle: getRandomElement(originalTitles),
     rating: getRandomElement(ratings), 
+    agerating: getRandomElement(ageRating),
     date: getRandomElement(releaseDate), 
+    commentdate: getRandomElement(releaseDate),
     duration: getRandomElement(duration), 
-    genre: getRandomElement(genres), 
+    genre: generateGenres()[0], 
+    genrepopup: generateGenres(),
     url: getRandomElement(postersUrls), 
-    description: generateDescription(), 
-    comments: generateComments().length,
+    shortdescription: generateShortDescription(),
+    description: generateDescription().join(` `), 
+    commentslength: commentsArr.length,
+    //comments: generateComments(),
+    country: getRandomElement(country),
+    director: getRandomElement(directors),
+    writters: getRandomElement(writters),
+    actors: getRandomElement(actors),
   }
-};
+}
