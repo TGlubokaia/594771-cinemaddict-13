@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 export const createFilmDetailsTemplate = function (card) {
   const {title, originaltitle, rating, agerating, date, duration, genre, url, country, description, commentslength, director, writters, actors} = card;
   return `<section class="film-details">
@@ -40,7 +41,7 @@ export const createFilmDetailsTemplate = function (card) {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${date}</td>
+              <td class="film-details__cell">${dayjs(date).format('D MMMM YYYY')}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>

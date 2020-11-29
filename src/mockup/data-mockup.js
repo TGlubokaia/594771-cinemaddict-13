@@ -68,10 +68,19 @@ export const actors = [
 ];
 
 export const releaseDate = [
-  `20 August 2005`,
-  `06 October 1998`,
-  `14 May 2015`
+  `2005-08-25`,
+  `1998-10-6`,
+  `2012-01-28`,
+  `2015-05-20`,
+  `2018-03-05`
 ];
+
+export const commentDate = [
+  `2020-08-25`,
+  `2020-10-06`,
+  `2020-05-20`,
+  `2020-11-07`
+]
 
 export const duration = [
   `1h 36m`,
@@ -142,7 +151,7 @@ export const ratings = [
   `7.5`,
   `8.9`,
   `7.7`,
-  `7,8`,
+  `7.8`,
   `7.1`,
   `7.4`
 ];

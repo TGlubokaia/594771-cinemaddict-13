@@ -17,6 +17,7 @@ import {emojis} from "./data-mockup.js";
 import {users} from "./data-mockup.js";
 import {ratings} from "./data-mockup.js";
 import {ageRating} from "./data-mockup.js";
+import {commentDate} from "./data-mockup.js";
 
 const generateDescription = function () {
   let description = [];
@@ -56,18 +57,18 @@ const generateGenres = function () {
     genresArr.push(getRandomElement(genres));
   }
   return genresArr;
-}
-
-export const commentsArr = generateComments();
+};
 
 export const generateFilmCard = function () {
+  let commentsArr = generateComments();
    return {
     title: getRandomElement(titles), 
     originaltitle: getRandomElement(originalTitles),
     rating: getRandomElement(ratings), 
     agerating: getRandomElement(ageRating),
+    releaseyear: dayjs(getRandomElement(releaseDate)).format('YYYY'),
     date: getRandomElement(releaseDate), 
-    commentdate: getRandomElement(releaseDate),
+    commentdate: getRandomElement(commentDate),
     duration: getRandomElement(duration), 
     genre: generateGenres()[0], 
     genrepopup: generateGenres(),
@@ -75,7 +76,7 @@ export const generateFilmCard = function () {
     shortdescription: generateShortDescription(),
     description: generateDescription().join(` `), 
     commentslength: commentsArr.length,
-    //comments: generateComments(),
+    comments: commentsArr,
     country: getRandomElement(country),
     director: getRandomElement(directors),
     writters: getRandomElement(writters),
