@@ -8,4 +8,4 @@ export const generateSortByRating = function (items) {
   items.sort((a, b) => {
     return parseFloat(a.rating) - parseFloat(b.rating);
   });
-}
+};

@@ -1,6 +1,15 @@
 import dayjs from "dayjs";
+
+const generateGenre = function (genreArr) {
+  let genreItem = [];
+  for (let i = 0; i < genreArr.length; i++) {
+    genreItem.push(`<span class="film-details__genre">${genreArr[i]}</span>`);
+  }
+  return genreItem.join(``);
+};
+
 export const createFilmDetailsTemplate = function (card) {
-  const {title, originaltitle, rating, agerating, date, duration, genre, url, country, description, commentslength, director, writters, actors} = card;
+  const {title, originaltitle, rating, agerating, date, duration, genre, url, country, description, comments, director, writters, actors} = card;
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="film-details__top-container">
@@ -41,7 +50,7 @@ export const createFilmDetailsTemplate = function (card) {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${dayjs(date).format('D MMMM YYYY')}</td>
+              <td class="film-details__cell">${dayjs(date).format(`D MMMM YYYY`)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
@@ -54,9 +63,8 @@ export const createFilmDetailsTemplate = function (card) {
             <tr class="film-details__row">
               <td class="film-details__term">Genres</td>
               <td class="film-details__cell">
-                <span class="film-details__genre">${genre}</span>
-                <span class="film-details__genre">${genre}</span>
-                <span class="film-details__genre">${genre}</span></td>
+              ${generateGenre(genre)}
+              </td>
             </tr>
           </table>
 
@@ -80,7 +88,7 @@ export const createFilmDetailsTemplate = function (card) {
 
     <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
-        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${commentslength}</span></h3>
+        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
 
         <ul class="film-details__comments-list">
           

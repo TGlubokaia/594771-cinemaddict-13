@@ -4,7 +4,7 @@ export const getRandomNumber = (a = 0, b = 1) => {
 
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
- 
+
 export const getRandomElement = (elements) => {
   let element = elements[getRandomNumber(0, elements.length - 1)];
   return element;

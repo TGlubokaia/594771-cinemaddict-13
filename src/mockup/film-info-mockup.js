@@ -24,14 +24,14 @@ const generateDescription = function () {
   for (let i = 0; i < getRandomNumber(1, 5); i++) {
     description.push(getRandomElement(descriptionSentences));
   }
-  return description;
+  return description.join(` `);
 };
 
 const generateShortDescription = function () {
-  let description = generateDescription().join(` `);
+  let description = generateDescription();
   if (description.length > 140) {
-    return description = description.substring(0, 138) + `...`;
-  } return description
+    return description === description.substring(0, 138) + `...`;
+  } return description;
 };
 
 const generateComment = function () {
@@ -53,33 +53,36 @@ export const generateComments = function () {
 
 const generateGenres = function () {
   let genresArr = [];
-  for (let i = 1; i < getRandomNumber(1, 3); i++) {
+  for (let i = 0; i < 3; i++) {
     genresArr.push(getRandomElement(genres));
   }
   return genresArr;
 };
 
 export const generateFilmCard = function () {
-  let commentsArr = generateComments();
-   return {
-    title: getRandomElement(titles), 
+  const isToWatch = !!getRandomNumber(0, 1);
+  const isWatched = isToWatch === false ? !!(getRandomNumber(0, 1)) : false;
+  return {
+    title: getRandomElement(titles),
     originaltitle: getRandomElement(originalTitles),
-    rating: getRandomElement(ratings), 
+    rating: getRandomElement(ratings),
     agerating: getRandomElement(ageRating),
-    releaseyear: dayjs(getRandomElement(releaseDate)).format('YYYY'),
-    date: getRandomElement(releaseDate), 
+    releaseyear: dayjs(getRandomElement(releaseDate)).format(`YYYY`),
+    date: getRandomElement(releaseDate),
     commentdate: getRandomElement(commentDate),
-    duration: getRandomElement(duration), 
-    genre: generateGenres()[0], 
+    duration: getRandomElement(duration),
+    genre: generateGenres(),
     genrepopup: generateGenres(),
-    url: getRandomElement(postersUrls), 
+    url: getRandomElement(postersUrls),
     shortdescription: generateShortDescription(),
-    description: generateDescription().join(` `), 
-    commentslength: commentsArr.length,
-    comments: commentsArr,
+    description: generateDescription(),
+    comments: generateComments(),
     country: getRandomElement(country),
     director: getRandomElement(directors),
     writters: getRandomElement(writters),
     actors: getRandomElement(actors),
-  }
-}
+    isFavorite: !!getRandomNumber(0, 1),
+    isToWatch,
+    isWatched,
+  };
+};
