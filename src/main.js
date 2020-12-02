@@ -117,6 +117,7 @@ render(siteFilmsElement, createFilmsExtraTemplate(`Top rated`), `beforeend`);
 render(siteFilmsElement, createFilmsExtraTemplate(`Most commented`), `beforeend`);
 const footerElement = document.querySelector(`.footer`);
 render(footerElement, (createStatisticsTemplate(films.length)), `beforeend`);
+
 render(footerElement, createFilmDetailsTemplate(films[0]), `afterend`);
 const filmCommentList = document.querySelector(`.film-details__comments-list`);
 

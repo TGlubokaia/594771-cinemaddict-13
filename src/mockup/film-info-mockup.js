@@ -27,13 +27,6 @@ const generateDescription = function () {
   return description.join(` `);
 };
 
-const generateShortDescription = function () {
-  let description = generateDescription();
-  if (description.length > 140) {
-    return description === description.substring(0, 138) + `...`;
-  } return description;
-};
-
 const generateComment = function () {
   return {
     emoji: getRandomElement(emojis),
@@ -74,7 +67,7 @@ export const generateFilmCard = function () {
     genre: generateGenres(),
     genrepopup: generateGenres(),
     url: getRandomElement(postersUrls),
-    shortdescription: generateShortDescription(),
+    // shortdescription: generateShortDescription(),
     description: generateDescription(),
     comments: generateComments(),
     country: getRandomElement(country),
