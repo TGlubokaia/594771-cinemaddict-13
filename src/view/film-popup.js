@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import {createElement} from "../utils.js";
 
 const generateGenre = function (genreArr) {
   let genreItem = [];
@@ -8,7 +9,7 @@ const generateGenre = function (genreArr) {
   return genreItem.join(``);
 };
 
-export const createFilmDetailsTemplate = function (card) {
+const createFilmDetailsTemplate = function (card) {
   const {title, originaltitle, rating, agerating, date, duration, genre, url, country, description, comments, director, writters, actors} = card;
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
@@ -128,3 +129,27 @@ export const createFilmDetailsTemplate = function (card) {
   </form>
 </section>`;
 };
+
+
+export default class FilmPopup {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmDetailsTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

@@ -1,3 +1,4 @@
+import {createElement} from "../utils.js";
 
 const generateShortDescription = function (desc) {
   if (desc.length > 140) {
@@ -6,7 +7,7 @@ const generateShortDescription = function (desc) {
   } return desc;
 };
 
-export const createFilmCardTemplate = function (film) {
+const createFilmCardTemplate = function (film) {
 
   const {title, rating, releaseyear, duration, genre, url, description, comments} = film;
   return `<article class="film-card">
@@ -27,3 +28,27 @@ export const createFilmCardTemplate = function (film) {
   </div>
 </article>`;
 };
+
+
+export default class FilmCard {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCardTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
