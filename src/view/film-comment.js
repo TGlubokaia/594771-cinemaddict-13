@@ -19,7 +19,7 @@ const createFilmCommentTemplate = function (comment) {
 export default class FilmComment {
   constructor(comment) {
     this._element = null;
-    this._comment = comment
+    this._comment = comment;
   }
 
   getTemplate() {
