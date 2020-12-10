@@ -67,7 +67,6 @@ export const generateFilmCard = function () {
     genre: generateGenres(),
     genrepopup: generateGenres(),
     url: getRandomElement(postersUrls),
-    // shortdescription: generateShortDescription(),
     description: generateDescription(),
     comments: generateComments(),
     country: getRandomElement(country),
