@@ -7,7 +7,8 @@ const createMenuItemLink = function (filter) {
   return `<a href="#${name}" class="main-navigation__item">${text} ${number ? `<span class="main-navigation__item-count">${count}</span>` : ``}</a>`;
 };
 
-const createMenuTemplate = function (filterArr) {
+const createMenuTemplate = function () {
+  let filterArr = generateFilter(films);
   return `<nav class="main-navigation">
     <div class="main-navigation__items">
     ${filterArr.map((filter) => createMenuItemLink(filter)).join(``)}

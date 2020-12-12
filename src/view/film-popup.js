@@ -9,7 +9,7 @@ const generateGenre = function (genreArr) {
   return genreItem.join(``);
 };
 
-export const createFilmDetailsTemplate = function (card) {
+const createFilmDetailsTemplate = function (card) {
   const {title, originaltitle, rating, agerating, date, duration, genre, url, country, description, comments, director, writters, actors} = card;
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">

@@ -8,7 +8,7 @@ const generateShortDescription = function (desc) {
   } return desc;
 };
 
-export const createFilmCardTemplate = function (film) {
+const createFilmCardTemplate = function (film) {
 
   const {title, rating, date, duration, genre, url, description, comments} = film;
   return `<article class="film-card">
