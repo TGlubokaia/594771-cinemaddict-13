@@ -1,4 +1,6 @@
-export const createFilmCommentTemplate = function (comment) {
+import Abstract from "./abstract.js";
+
+const createFilmCommentTemplate = function (comment) {
   return `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
     <img src="${comment.emoji}" width="55" height="55" alt="emoji-smile">
@@ -13,3 +15,13 @@ export const createFilmCommentTemplate = function (comment) {
   </div>
 </li>`;
 };
+
+export default class FilmComment extends Abstract {
+  constructor(comment) {
+    super();
+    this._comment = comment;
+  }
+  getTemplate() {
+    return createFilmCommentTemplate(this._comment);
+  }
+}

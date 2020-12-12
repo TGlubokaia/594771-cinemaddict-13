@@ -16,3 +16,9 @@ export const buttonToggle = function (evt, buttons, ACTIVE_CLASS) {
   });
   evt.target.classList.add(ACTIVE_CLASS);
 };
+
+export const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+  return newElement.firstChild;
+};

@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import Abstract from "./abstract.js";
 
 const generateGenre = function (genreArr) {
   let genreItem = [];
@@ -128,3 +129,13 @@ export const createFilmDetailsTemplate = function (card) {
   </form>
 </section>`;
 };
+
+export default class FilmPopup extends Abstract {
+  constructor(film) {
+    super();
+    this._film = film;
+  }
+  getTemplate() {
+    return createFilmDetailsTemplate(this._film);
+  }
+}

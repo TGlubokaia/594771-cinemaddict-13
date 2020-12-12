@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
-import {getRandomNumber} from "../utils.js";
-import {getRandomElement} from "../utils.js";
+import {getRandomNumber} from "../utils/common.js";
+import {getRandomElement} from "../utils/common.js";
 import {descriptionSentences} from "./data-mockup.js";
 import {titles} from "./data-mockup.js";
 import {originalTitles} from "./data-mockup.js";
@@ -67,7 +67,6 @@ export const generateFilmCard = function () {
     genre: generateGenres(),
     genrepopup: generateGenres(),
     url: getRandomElement(postersUrls),
-    // shortdescription: generateShortDescription(),
     description: generateDescription(),
     comments: generateComments(),
     country: getRandomElement(country),
