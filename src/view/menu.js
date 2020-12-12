@@ -1,4 +1,4 @@
-import Abstract from "./abstract.js"
+import Abstract from "./abstract.js";
 import {films} from "../main.js";
 import {generateFilter} from "../mockup/menu-mockup";
 

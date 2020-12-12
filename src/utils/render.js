@@ -21,4 +21,4 @@ export const render = (container, child, place) => {
       container.append(child);
       break;
   }
-}; 
+};
