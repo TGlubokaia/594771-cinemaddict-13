@@ -103,7 +103,7 @@ const renderFilmsList = function (container, filmCards) {
       filmCards.slice(renderedFilmCount, renderedFilmCount + COUNT_PER_STEP).forEach((filmCard) => renderFilmCard(siteFilmsListComponent, filmCard));
       renderedFilmCount += COUNT_PER_STEP;
       if (renderedFilmCount >= filmCards.length) {
-        ShowMoreButtonComponent.remove();
+        ShowMoreButtonComponent.getElement().remove();
       }
     });
   }
