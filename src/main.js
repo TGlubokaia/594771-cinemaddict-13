@@ -12,9 +12,7 @@ import {generateFilmCard} from "./mockup/film-info-mockup.js";
 import Statistics from "./view/film-statistics.js";
 import {getRandomNumber} from "./utils/common.js";
 import {render, RenderPosition} from "./utils/render.js";
-// import {getRandomNumber, buttonToggle, render, RenderPosition} from "./utils.js";
-// import {generateSortByDate} from "./mockup/sort-mockup";
-// import {generateSortByRating} from "./mockup/sort-mockup";
+
 const NUMBER_OF_FILM_CARDS = getRandomNumber(15, 25);
 const COUNT_PER_STEP = 5;
 const siteMainElement = document.querySelector(`.main`);
@@ -22,22 +20,9 @@ const siteHeaderElement = document.querySelector(`.header`);
 const menuComponent = new Menu();
 const filmsContainerComponent = new FilmsContainer();
 const siteFilmsElement = filmsContainerComponent.getElement().querySelector(`.films-list`);
-// const sortButtons = document.querySelectorAll(`.sort__button`);
-// const menuButtons = document.querySelectorAll(`.main-navigation__item`);
 const siteFilmsListComponent = new FilmsListContainer();
 
 export const films = new Array(NUMBER_OF_FILM_CARDS).fill().map(generateFilmCard);
-// const filmsDefault = Object.assign([], films);
-/*
-const extraBlocks = document.querySelectorAll(`.films-list--extra`);
-const renderExtra = function (blocks, extrasNumber, cardsNumber) {
-  for (let i = 0; i < extrasNumber; i++) {
-    render(blocks[i].querySelector(`.films-list__container`), siteFilmsListContainerElement, `beforeend`, cardsNumber);
-  }
-};
-renderExtra(extraBlocks, NUMBER_OF_EXTRA, 2);
-*/
-
 
 const renderFilmCard = function (filmListElement, filmCard) {
   const filmComponent = new FilmCard(filmCard);
@@ -109,42 +94,6 @@ const renderFilmsList = function (container, filmCards) {
   }
   render(container, siteFilmsListComponent, RenderPosition.AFTERBEGIN);
 };
-
-
-// const updateFilms = function (filmslist) {
-//   let filmItems = document.querySelectorAll(`.film-card`);
-//   filmItems.forEach(function (element) {
-//     element.remove();
-//   });
-//   renderFilmsList(siteFilmsElement, filmslist);
-// };
-
-
-// const renderSortBtn = function () {
-//   const btnComponent = new Sort();
-//   const sortBtn = btnComponent.getElement().querySelectorAll(`.sort__button`);
-
-//   sortBtn.forEach(function (element) {
-//     element.addEventListener(`click`, function (evt) {
-//       // buttonToggle(evt, sortBtn, `sort__button--active`);
-//       // switch (element.textContent) {
-//       //   case `Sort by date`:
-//           // generateSortByDate(films);
-//           updateFilms(films);
-//         //   break;
-//         // case `Sort by rating`:
-//         //   generateSortByRating(films);
-//         //   updateFilms(films);
-//         //   break;
-//         // default:
-//         //   updateFilms(filmsDefault);
-//         //   break;
-//       }
-//     // }
-//     );
-//   });
-//   render(siteMainElement, btnComponent.getElement(), RenderPosition.BEFOREEND)
-// };
 
 render(siteHeaderElement, new UserTitle(), RenderPosition.BEFOREEND);
 render(siteMainElement, menuComponent, RenderPosition.AFTERBEGIN);
