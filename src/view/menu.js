@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import Abstract from "./abstract.js";
 import {films} from "../main.js";
 import {generateFilter} from "../mockup/menu-mockup";
 
@@ -17,25 +17,8 @@ const createMenuTemplate = function () {
   </nav>`;
 };
 
-
-export default class Menu {
-  constructor() {
-    this._element = null;
-  }
-
+export default class Menu extends Abstract {
   getTemplate() {
     return createMenuTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

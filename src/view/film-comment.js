@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import Abstract from "./abstract.js";
 
 const createFilmCommentTemplate = function (comment) {
   return `<li class="film-details__comment">
@@ -16,25 +16,12 @@ const createFilmCommentTemplate = function (comment) {
 </li>`;
 };
 
-export default class FilmComment {
+export default class FilmComment extends Abstract {
   constructor(comment) {
-    this._element = null;
+    super();
     this._comment = comment;
   }
-
   getTemplate() {
     return createFilmCommentTemplate(this._comment);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

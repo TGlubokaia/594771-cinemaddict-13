@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import Abstract from "./abstract.js";
 
 const createUserTitleTemplate = function () {
   return `<section class="header__profile profile">
@@ -7,24 +7,8 @@ const createUserTitleTemplate = function () {
   </section>`;
 };
 
-export default class UserTitle {
-  constructor() {
-    this._element = null;
-  }
-
+export default class UserTitle extends Abstract {
   getTemplate() {
     return createUserTitleTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
