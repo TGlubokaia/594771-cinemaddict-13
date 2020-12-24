@@ -4,12 +4,12 @@ import FilmsView from "../view/films.js";
 import FilmsListView from "../view/films-list.js";
 import FilmsTitleView from "../view/films-title.js";
 import FilmsListContainerView from "../view/films-list-container.js";
-// import FilmCard from "../view/film-card.js";
-import FilmsExtraView  from "../view/films-extra.js";
-// import {render, RenderPosition} from "../utils/render.js";
-// import ShowMoreButtonView  from "../view/button-show-more.js";
-// import FilmPopupView  from "../view/film-popup.js";
-// import FilmCommentView  from "../view/film-comment.js";
+import FilmCard from "../view/film-card.js";
+import FilmsExtraView from "../view/films-extra.js";
+import { render, RenderPosition } from "../utils/render.js";
+import ShowMoreButtonView from "../view/button-show-more.js";
+import FilmPopupView from "../view/film-popup.js";
+import FilmCommentView  from "../view/film-comment.js";
 import NoFilmView from "../view/no-film.js";
 
 const COUNT_PER_STEP = 5;
@@ -24,7 +24,7 @@ export default class Board {
     this._boardContainer = boardContainer /* <main> */;
 
 
-    this.menu = new MenuView();
+    this._menu = new MenuView();
     this._sort = new SortView();
     this._films = new FilmsView();
     this._filmsList = new FilmsListView();
@@ -36,52 +36,114 @@ export default class Board {
   }
 
   init(boardFilms) {
-    this._boardFilms = boardFilms.slice();
-    this._sourcedBoardFilms = boardFilms.slice();
     // Метод для инициализации (начала работы) модуля,
     // малая часть текущей функции renderBoard в main.js
+    this._boardFilms = boardFilms.slice();
+    this._sourcedBoardFilms = boardFilms.slice();
 
-    render(this._boardContainer /* <main> */, this.menu, RenderPosition.AFTERBEGIN); // отрисовали меню
-    render(this._boardContainer /* <main> */, this._films, RenderPosition.BEFOREEND); // отрисовали элемент .films
-    render(this._films /* <main> */, this._filmsList, RenderPosition.BEFOREEND); // отрисовали элемент .films-list
+    render(this._boardContainer /* <main> */, this._menu, RenderPosition.AFTERBEGIN); // отрисовали меню
 
     this._renderBoard();
   }
-  _renderMenu() {
-    // Метод для рендеринга меню
-  }
-  _renderSort() {
-    // Метод для рендеринга сортировки
+
+  _renderFilmBox() {
+    // Метод для рендеринга контейнера для списка
+    render(this._boardContainer /* <main> */, this._films, RenderPosition.BEFOREEND); // отрисовали элемент .films
+    render(this._films /* <main> */, this._filmsList, RenderPosition.BEFOREEND); // отрисовали элемент .films-list
   }
 
-  _renderFilmCard() {
+  _renderSort() {
+    // Метод для рендеринга сортировки
+    render(this._boardContainer /* <main> */, this._sort, RenderPosition.AFTERBEGIN);
+  }
+
+  _renderFilmCard(filmCard) {
     // Метод, куда уйдёт логика созданию и рендерингу компонетов задачи,
     // текущая функция renderTask в main.js
+    const filmComponent = new FilmCard(filmCard);
+    const filmPopup = new FilmPopup(filmCard);
+
+    const onEscKeyDown = (evt) => {
+      if (evt.key === `Escape` || evt.key === `Esc`) {
+        evt.preventDefault();
+        closePopup();
+      }
+    };
+    const closePopup = function () {
+      document.removeEventListener(`keydown`, onEscKeyDown);
+      document.body.classList.remove(`hide-overflow`);
+      const allComments = document.querySelectorAll(`.film-details__comment`);
+      for (let comment of allComments) {
+        comment.remove();
+      }
+      document.body.removeChild(filmPopup.getElement());
+    };
+
+    const openPopup = function () {
+      document.body.classList.add(`hide-overflow`);
+      document.body.appendChild(filmPopup.getElement());
+      const filmCommentList = document.querySelector(`.film-details__comments-list`);
+      for (let i = 0; i < filmCard.comments.length; i++) {
+        render(filmCommentList, new FilmCommentView(filmCard.comments[i]), RenderPosition.BEFOREEND);
+      }
+      document.addEventListener(`keydown`, onEscKeyDown);
+      document.querySelector(`.film-details__close-btn`).addEventListener(`click`, function () {
+        closePopup();
+      });
+    };
+
+    filmComponent.setPopupOpenHandler(() => {
+      openPopup();
+      document.addEventListener(`keydown`, onEscKeyDown);
+    });
+
+    filmComponent.setPopupOpenHandler(() => {
+      openPopup();
+      document.addEventListener(`keydown`, onEscKeyDown);
+    });
+    filmComponent.setPopupOpenHandler(() => {
+      openPopup();
+      document.addEventListener(`keydown`, onEscKeyDown);
+    });
+
+    render(this._filmsListContainer, filmComponent, RenderPosition.BEFOREEND);
+
   }
 
   _renderFilmsList(from, to) {
     // Метод для рендеринга N-задач за раз
+    this._boardFilms
+      .slice(from, to)
+      .forEach((boardFilm) => this._renderFilmCard(boardFilm));
+  }
+}
+
+_renderNoFilms() {
+  // Метод для рендеринга заглушки
+  render(this._filmsList /* <main> */, this._noFilm, RenderPosition.BEFOREEND);
+}
+
+_renderShowMoreButton() {
+  // Метод, куда уйдёт логика по отрисовке компонетов задачи,
+  // текущая функция renderTask в main.js
+}
+
+_renderBoard() {
+  if (this._boardFilms.length === 0) {
+    this._renderFilmBox();
+    this._renderNoFilms();
+    return;
+  }
+  this._renderSort();
+  this._renderFilmBox();
+
+  this._renderFilmsList(0, Math.min(this._boardFilms.length, COUNT_PER_STEP));
+
+  if (this._boardFilms.length > COUNT_PER_STEP) {
+    this._renderShowMoreButton();
   }
 
-  _renderNoFilms() {
-    render(this._filmsList /* <main> */, this._noFilm, RenderPosition.BEFOREEND); // отрисовали отсутствие карточек
-    // Метод для рендеринга заглушки
-  }
-
-  _renderShowMoreButton() {
-    // Метод, куда уйдёт логика по отрисовке компонетов задачи,
-    // текущая функция renderTask в main.js
-  }
-
-  _renderBoard() {
-    if (this._boardFilms.length === 0) {
-      this._renderNoFilms();
-      return;
-    }
-    this._renderSort();
-    this._renderFilmsList();
-
-    // Метод для инициализации (начала работы) модуля,
-    // бОльшая часть текущей функции renderBoard в main.js
-  }
+  // Метод для инициализации (начала работы) модуля,
+  // бОльшая часть текущей функции renderBoard в main.js
+}
 }
