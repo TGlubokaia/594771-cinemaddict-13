@@ -57,7 +57,7 @@ export default class Board {
     // текущая функция renderTask в main.js
   }
 
-  _renderFilms(from, to) {
+  _renderFilmsList(from, to) {
     // Метод для рендеринга N-задач за раз
   }
 
@@ -72,17 +72,12 @@ export default class Board {
 
   _renderBoard() {
     this._renderMenu();
-    if (!this._boardFilms.length) {
+    if (this._boardFilms.length === 0) {
       this._renderNoTasks();
       return;
     }
     this._renderSort();
-    this._renderFilms()
-
-
-
-
-
+    this._renderFilmsList();
 
     // Метод для инициализации (начала работы) модуля,
     // бОльшая часть текущей функции renderBoard в main.js
