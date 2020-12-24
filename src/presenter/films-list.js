@@ -12,19 +12,19 @@ import FilmsExtraView  from "../view/films-extra.js";
 // import FilmCommentView  from "../view/film-comment.js";
 import NoFilmView from "../view/no-film.js";
 
-
-
-
 const COUNT_PER_STEP = 5;
-// const siteMainElement = document.querySelector(`.main`);
+
+
+
+
 
 export default class Board {
   constructor(boardContainer) {
     this._renderedFilmCount = COUNT_PER_STEP;
-    this._boardContainer = boardContainer;
+    this._boardContainer = boardContainer /* <main> */;
 
 
-    this._menu = new MenuView();
+    this.menu = new MenuView();
     this._sort = new SortView();
     this._films = new FilmsView();
     this._filmsList = new FilmsListView();
@@ -37,11 +37,13 @@ export default class Board {
 
   init(boardFilms) {
     this._boardFilms = boardFilms.slice();
+    this._sourcedBoardFilms = boardFilms.slice();
     // Метод для инициализации (начала работы) модуля,
     // малая часть текущей функции renderBoard в main.js
 
-    render(this._boardContainer, this._boardComponent, RenderPosition.BEFOREEND);
-    render(this._boardComponent, this._taskListComponent, RenderPosition.BEFOREEND);
+    render(this._boardContainer /* <main> */, this.menu, RenderPosition.AFTERBEGIN); // отрисовали меню
+    render(this._boardContainer /* <main> */, this._films, RenderPosition.BEFOREEND); // отрисовали элемент .films
+    render(this._films /* <main> */, this._filmsList, RenderPosition.BEFOREEND); // отрисовали элемент .films-list
 
     this._renderBoard();
   }
@@ -62,6 +64,7 @@ export default class Board {
   }
 
   _renderNoFilms() {
+    render(this._filmsList /* <main> */, this._noFilm, RenderPosition.BEFOREEND); // отрисовали отсутствие карточек
     // Метод для рендеринга заглушки
   }
 
@@ -71,9 +74,8 @@ export default class Board {
   }
 
   _renderBoard() {
-    this._renderMenu();
     if (this._boardFilms.length === 0) {
-      this._renderNoTasks();
+      this._renderNoFilms();
       return;
     }
     this._renderSort();
