@@ -107,7 +107,7 @@ export default class Board {
 
   }
 
-  _renderFilmsList(from, to) {
+  _renderFilms(from, to) {
     // Метод для рендеринга N-задач за раз
     this._boardFilms
       .slice(from, to)
@@ -136,7 +136,17 @@ export default class Board {
     });
   }
 
+  _renderFilmsList() {
+    this._renderFilms(0, Math.min(this._boardFilms.length, COUNT_PER_STEP));
+
+    if (this._boardFilms.length > COUNT_PER_STEP) {
+      this._renderShowMoreButton();
+    }
+  }
+
   _renderBoard() {
+    // Метод для инициализации (начала работы) модуля,
+    // бОльшая часть текущей функции renderBoard в main.js
     if (this._boardFilms.length === 0) {
       this._renderFilmBox();
       this._renderNoFilms();
@@ -144,14 +154,6 @@ export default class Board {
     }
     this._renderSort();
     this._renderFilmBox();
-
-    this._renderFilmsList(0, Math.min(this._boardFilms.length, COUNT_PER_STEP));
-
-    if (this._boardFilms.length > COUNT_PER_STEP) {
-      this._renderShowMoreButton();
-    }
-
-    // Метод для инициализации (начала работы) модуля,
-    // бОльшая часть текущей функции renderBoard в main.js
+    this._renderFilmsList();
   }
 }
