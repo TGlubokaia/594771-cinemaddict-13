@@ -16,6 +16,7 @@ const footerElement = document.querySelector(`.footer`);
 // const siteFilmsListComponent = new FilmsListContainer();
 
 export const films = new Array(NUMBER_OF_FILM_CARDS).fill().map(generateFilmCard);
+
 const boardPresenter = new BoardPresenter(siteMainElement);
 
 render(siteHeaderElement, new UserTitle(), RenderPosition.BEFOREEND);

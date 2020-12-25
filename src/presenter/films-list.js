@@ -146,12 +146,11 @@ export default class Board {
 
   _renderBoard() {
 
-    // if (this._boardFilms.length === null) {
-    //   debugger;
-    //   this._renderFilmBox();
-    //   this._renderNoFilms();
-    //   return;
-    // }
+    if (this._boardFilms.length === 0) {
+      this._renderFilmBox();
+      this._renderNoFilms();
+      return;
+    }
     this._renderSort();
     this._renderFilmBox();
     render(this._filmsList, this._filmsListContainer, RenderPosition.BEFOREEND);
