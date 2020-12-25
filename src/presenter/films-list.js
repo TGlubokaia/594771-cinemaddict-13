@@ -6,7 +6,7 @@ import FilmsTitleView from "../view/films-title.js";
 import FilmsListContainerView from "../view/films-list-container.js";
 import FilmCardView from "../view/film-card.js";
 import FilmsExtraView from "../view/films-extra.js";
-import { render, RenderPosition } from "../utils/render.js";
+import {render, RenderPosition } from "../utils/render.js";
 import ShowMoreButtonView from "../view/button-show-more.js";
 import FilmPopupView from "../view/film-popup.js";
 import FilmCommentView from "../view/film-comment.js";
@@ -51,7 +51,7 @@ export default class Board {
 
   _renderSort() {
     // Метод для рендеринга сортировки
-    render(this._boardContainer, this._sort, RenderPosition.AFTERBEGIN);
+    render(this._boardContainer, this._sort, RenderPosition.BEFOREEND);
   }
 
   _renderFilmCard(filmCard) {
@@ -145,15 +145,16 @@ export default class Board {
   }
 
   _renderBoard() {
-    // Метод для инициализации (начала работы) модуля,
-    // бОльшая часть текущей функции renderBoard в main.js
-    if (this._boardFilms.length === 0) {
-      this._renderFilmBox();
-      this._renderNoFilms();
-      return;
-    }
+
+    // if (this._boardFilms.length === null) {
+    //   debugger;
+    //   this._renderFilmBox();
+    //   this._renderNoFilms();
+    //   return;
+    // }
     this._renderSort();
     this._renderFilmBox();
+    render(this._filmsList, this._filmsListContainer, RenderPosition.BEFOREEND);
     this._renderFilmsList();
   }
 }
