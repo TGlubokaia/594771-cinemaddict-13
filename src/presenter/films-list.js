@@ -4,18 +4,15 @@ import FilmsView from "../view/films.js";
 import FilmsListView from "../view/films-list.js";
 import FilmsTitleView from "../view/films-title.js";
 import FilmsListContainerView from "../view/films-list-container.js";
-import FilmCard from "../view/film-card.js";
+import FilmCardView from "../view/film-card.js";
 import FilmsExtraView from "../view/films-extra.js";
 import { render, RenderPosition } from "../utils/render.js";
 import ShowMoreButtonView from "../view/button-show-more.js";
 import FilmPopupView from "../view/film-popup.js";
-import FilmCommentView  from "../view/film-comment.js";
+import FilmCommentView from "../view/film-comment.js";
 import NoFilmView from "../view/no-film.js";
 
 const COUNT_PER_STEP = 5;
-
-
-
 
 
 export default class Board {
@@ -41,27 +38,27 @@ export default class Board {
     this._boardFilms = boardFilms.slice();
     this._sourcedBoardFilms = boardFilms.slice();
 
-    render(this._boardContainer /* <main> */, this._menu, RenderPosition.AFTERBEGIN); // отрисовали меню
+    render(this._boardContainer, this._menu, RenderPosition.AFTERBEGIN); // отрисовали меню
 
     this._renderBoard();
   }
 
   _renderFilmBox() {
     // Метод для рендеринга контейнера для списка
-    render(this._boardContainer /* <main> */, this._films, RenderPosition.BEFOREEND); // отрисовали элемент .films
-    render(this._films /* <main> */, this._filmsList, RenderPosition.BEFOREEND); // отрисовали элемент .films-list
+    render(this._boardContainer, this._films, RenderPosition.BEFOREEND); // отрисовали элемент .films
+    render(this._films, this._filmsList, RenderPosition.BEFOREEND); // отрисовали элемент .films-list
   }
 
   _renderSort() {
     // Метод для рендеринга сортировки
-    render(this._boardContainer /* <main> */, this._sort, RenderPosition.AFTERBEGIN);
+    render(this._boardContainer, this._sort, RenderPosition.AFTERBEGIN);
   }
 
   _renderFilmCard(filmCard) {
     // Метод, куда уйдёт логика созданию и рендерингу компонетов задачи,
     // текущая функция renderTask в main.js
-    const filmComponent = new FilmCard(filmCard);
-    const filmPopup = new FilmPopup(filmCard);
+    const filmComponent = new FilmCardView(filmCard);
+    const filmPopup = new FilmPopupView(filmCard);
 
     const onEscKeyDown = (evt) => {
       if (evt.key === `Escape` || evt.key === `Esc`) {
@@ -116,34 +113,45 @@ export default class Board {
       .slice(from, to)
       .forEach((boardFilm) => this._renderFilmCard(boardFilm));
   }
-}
 
-_renderNoFilms() {
-  // Метод для рендеринга заглушки
-  render(this._filmsList /* <main> */, this._noFilm, RenderPosition.BEFOREEND);
-}
+  _renderNoFilms() {
+    // Метод для рендеринга заглушки
+    render(this._filmsList, this._noFilm, RenderPosition.BEFOREEND);
+  }
 
-_renderShowMoreButton() {
-  // Метод, куда уйдёт логика по отрисовке компонетов задачи,
-  // текущая функция renderTask в main.js
-}
+  _renderShowMoreButton() {
+    // Метод, куда уйдёт логика по отрисовке компонетов задачи,
+    // текущая функция renderTask в main.js
 
-_renderBoard() {
-  if (this._boardFilms.length === 0) {
+    let renderedFilmCount = COUNT_PER_STEP;
+    const ShowMoreButtonComponent = new ShowMoreButtonView();
+
+    render(this._filmsList, ShowMoreButtonComponent, RenderPosition.BEFOREEND);
+    ShowMoreButtonComponent.setBtnClickHandler(() => {
+      this._boardFilms.slice(renderedFilmCount, renderedFilmCount + COUNT_PER_STEP).forEach((filmCard) => this._renderFilmCard(filmCard));
+      renderedFilmCount += COUNT_PER_STEP;
+      if (renderedFilmCount >= this._boardFilms.length) {
+        ShowMoreButtonComponent.getElement().remove();
+      }
+    });
+  }
+
+  _renderBoard() {
+    if (this._boardFilms.length === 0) {
+      this._renderFilmBox();
+      this._renderNoFilms();
+      return;
+    }
+    this._renderSort();
     this._renderFilmBox();
-    this._renderNoFilms();
-    return;
+
+    this._renderFilmsList(0, Math.min(this._boardFilms.length, COUNT_PER_STEP));
+
+    if (this._boardFilms.length > COUNT_PER_STEP) {
+      this._renderShowMoreButton();
+    }
+
+    // Метод для инициализации (начала работы) модуля,
+    // бОльшая часть текущей функции renderBoard в main.js
   }
-  this._renderSort();
-  this._renderFilmBox();
-
-  this._renderFilmsList(0, Math.min(this._boardFilms.length, COUNT_PER_STEP));
-
-  if (this._boardFilms.length > COUNT_PER_STEP) {
-    this._renderShowMoreButton();
-  }
-
-  // Метод для инициализации (начала работы) модуля,
-  // бОльшая часть текущей функции renderBoard в main.js
-}
 }
