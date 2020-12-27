@@ -23,4 +23,24 @@ export const createElement = (template) => {
   return newElement.firstChild;
 };
 
-// export const generateId = 
+
+// корректная ли функция??
+export const generateId = function (lower, upper) {
+  return Math.floor(lower + Math.random() * (upper - lower + 1));
+};
+
+export const updateItem = function (items, update) {
+  const index = items.findIndex((item) => item.id === update.id);
+
+  if (index === -1) {
+  return items;
+  }
+
+  return [
+  ...items.slice(0, index),
+  update,
+  ...items.slice(index + 1)
+  ];
+  };
+
+  // .findIndex - что за метод???

@@ -4,9 +4,9 @@ import FilmsView from "../view/films.js";
 import FilmsListView from "../view/films-list.js";
 import FilmsTitleView from "../view/films-title.js";
 import FilmsListContainerView from "../view/films-list-container.js";
-
+import { updateItem } from "../utils/common.js";
 import FilmsExtraView from "../view/films-extra.js";
-import {render, RenderPosition } from "../utils/render.js";
+import { render, RenderPosition } from "../utils/render.js";
 import ShowMoreButtonView from "../view/button-show-more.js";
 
 import NoFilmView from "../view/no-film.js";
@@ -41,7 +41,7 @@ export default class Board {
     this._boardFilms = boardFilms.slice();
     this._sourcedBoardFilms = boardFilms.slice();
 
-    render(this._boardContainer, this._menu, RenderPosition.AFTERBEGIN); 
+    render(this._boardContainer, this._menu, RenderPosition.AFTERBEGIN);
     this._renderBoard();
   }
 
@@ -68,11 +68,16 @@ export default class Board {
 
   _clearFilmsList() {
     Object
-    .values(this._filmCardPresenter)
-    .forEach((presenter) => presenter.destroy());
+      .values(this._filmCardPresenter)
+      .forEach((presenter) => presenter.destroy());
     this._filmCardPresenter = {};
     this._renderedFilmCount = COUNT_PER_STEP;
     remove(this._showMoreButton);
+  }
+
+  _handleFilmCardChange(updatedFilmCard) {
+    this._boardFilms = updateItem(this._boardFilms, updatedFilmCard);
+    this._filmCardPresenter[updatedFilmCard.id].init(updatedFilmCard);
     }
 
   _renderNoFilms() {
