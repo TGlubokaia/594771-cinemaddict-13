@@ -18,6 +18,7 @@ import {users} from "./data-mockup.js";
 import {ratings} from "./data-mockup.js";
 import {ageRating} from "./data-mockup.js";
 import {commentDate} from "./data-mockup.js";
+import {generateId} from "../utils/common.js";
 
 const generateDescription = function () {
   let description = [];
@@ -56,6 +57,7 @@ export const generateFilmCard = function () {
   const isToWatch = !!getRandomNumber(0, 1);
   const isWatched = isToWatch === false ? !!(getRandomNumber(0, 1)) : false;
   return {
+    id: generateFilmCard(),
     title: getRandomElement(titles),
     originaltitle: getRandomElement(originalTitles),
     rating: getRandomElement(ratings),

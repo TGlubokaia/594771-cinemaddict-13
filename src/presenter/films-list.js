@@ -31,6 +31,7 @@ export default class Board {
     this._noFilm = new NoFilmView();
     this._showMoreButton = new ShowMoreButtonView();
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
+    this._filmCardPresenter = {};
 
   }
 
@@ -56,6 +57,7 @@ export default class Board {
   _renderFilmCard(filmCard) {
     const filmCardPresenter = new FilmCardPresenter(this._filmsListContainer);
     filmCardPresenter.init(filmCard);
+    this._filmCardPresenter[filmCard.id] = filmCardPresenter;
   }
 
   _renderFilms(from, to) {
@@ -63,6 +65,15 @@ export default class Board {
       .slice(from, to)
       .forEach((boardFilm) => this._renderFilmCard(boardFilm));
   }
+
+  _clearFilmsList() {
+    Object
+    .values(this._filmCardPresenter)
+    .forEach((presenter) => presenter.destroy());
+    this._filmCardPresenter = {};
+    this._renderedFilmCount = COUNT_PER_STEP;
+    remove(this._showMoreButton);
+    }
 
   _renderNoFilms() {
     render(this._filmsList, this._noFilm, RenderPosition.BEFOREEND);

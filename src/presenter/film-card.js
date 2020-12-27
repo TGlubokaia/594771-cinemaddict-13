@@ -1,4 +1,4 @@
-import { render, RenderPosition } from "../utils/render.js";
+import {render, RenderPosition, remove, replace} from "../utils/render.js";
 import FilmPopupView from "../view/film-popup.js";
 import FilmCommentView from "../view/film-comment.js";
 import FilmCardView from "../view/film-card.js";
@@ -18,16 +18,27 @@ export default class FilmCard {
 
   init(filmCard) {
     this._filmCard = filmCard;
+    const prevFilmCard = this._prevfilmCard;
     this._filmComponent = new FilmCardView(filmCard);
     this._filmPopup = new FilmPopupView(filmCard);
 
     this._filmComponent.setPopupOpenHandler(this._handleOpenClick);
 
+    if (prevFilmCard === null) {
+      render(this._filmsListContainer, this._filmComponent, RenderPosition.BEFOREEND);
+      return;
+    }
+    if (this._filmsListContainer.getElement().contains(prevFilmCard.getElement())) {
+      replace(this._filmComponent, prevFilmCard);
+    }
+    remove(prevFilmCard);
 
-    render(this._filmsListContainer, this._filmComponent, RenderPosition.BEFOREEND);
   }
 
+  destroy() {
+    remove(this._prevfilmCard);
 
+  }
 
 
   _onEscKeyDown(evt) {
