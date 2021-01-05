@@ -20,17 +20,7 @@ export const films = new Array(NUMBER_OF_FILM_CARDS).fill().map(generateFilmCard
 const boardPresenter = new BoardPresenter(siteMainElement);
 
 render(siteHeaderElement, new UserTitle(), RenderPosition.BEFOREEND);
-
 boardPresenter.init(films);
-
-// render(siteMainElement, menuComponent, RenderPosition.AFTERBEGIN);
-// render(siteMainElement, new Sort(), RenderPosition.BEFOREEND);
-// render(siteMainElement, filmsContainerComponent, RenderPosition.BEFOREEND);
-// const filmsElement = document.querySelector(`.films`);
-// renderFilmsList(siteFilmsElement/*`.films-list`*/, films);
-// render(filmsElement, new FilmsExtra(`Top rated`), RenderPosition.BEFOREEND);
-// render(filmsElement, new FilmsExtra(`Most commented`), RenderPosition.BEFOREEND);
-
 
 render(footerElement, new Statistics(films.length), RenderPosition.BEFOREEND);
 

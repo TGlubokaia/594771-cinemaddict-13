@@ -18,7 +18,9 @@ import {users} from "./data-mockup.js";
 import {ratings} from "./data-mockup.js";
 import {ageRating} from "./data-mockup.js";
 import {commentDate} from "./data-mockup.js";
-import {generateId} from "../utils/common.js";
+
+
+const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
 
 const generateDescription = function () {
   let description = [];
@@ -54,10 +56,8 @@ const generateGenres = function () {
 };
 
 export const generateFilmCard = function () {
-  const isToWatch = !!getRandomNumber(0, 1);
-  const isWatched = isToWatch === false ? !!(getRandomNumber(0, 1)) : false;
   return {
-    id: generateFilmCard(),
+    id: generateId(),
     title: getRandomElement(titles),
     originaltitle: getRandomElement(originalTitles),
     rating: getRandomElement(ratings),
@@ -76,7 +76,7 @@ export const generateFilmCard = function () {
     writters: getRandomElement(writters),
     actors: getRandomElement(actors),
     isFavorite: !!getRandomNumber(0, 1),
-    isToWatch,
-    isWatched,
+    isToWatch: !!getRandomNumber(0, 1),
+    isWatched: !!getRandomNumber(0, 1),
   };
 };

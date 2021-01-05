@@ -4,8 +4,10 @@ import FilmCommentView from "../view/film-comment.js";
 import FilmCardView from "../view/film-card.js";
 
 export default class FilmCard {
-  constructor(filmsListContainer) {
+  constructor(filmsListContainer, changeData) {
     this._filmsListContainer = filmsListContainer;
+    this._changeData = changeData;
+
     this._filmComponent = null;
     this._filmPopup = null;
     this._filmCard = null;
@@ -13,33 +15,40 @@ export default class FilmCard {
     this._handleOpenClick = this._handleOpenClick.bind(this);
     this._handleCloseClick = this._handleCloseClick.bind(this);
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
-    
+
+    this._handleFavoriteClick = this._handleFavoriteClick.bind(this); // фильтр
+    this._handleHistoryClick = this._handleHistoryClick.bind(this); // фильтр
+    this._handleWatchlistClick = this._handleWatchlistClick.bind(this); // фильтр
+
   }
 
   init(filmCard) {
     this._filmCard = filmCard;
-    const prevFilmCard = this._prevfilmCard;
+    const prevFilmCard = this._filmComponent;
     this._filmComponent = new FilmCardView(filmCard);
     this._filmPopup = new FilmPopupView(filmCard);
 
     this._filmComponent.setPopupOpenHandler(this._handleOpenClick);
 
+    this._filmComponent.setFavoriteClickHandler(this._handleFavoriteClick); // фильтр
+    this._filmComponent.setHistoryClickHandler(this._handleHistoryClick); // фильтр
+    this._filmComponent.setWatchlistClickHandler(this._handleWatchlistClick); // фильтр
+
     if (prevFilmCard === null) {
       render(this._filmsListContainer, this._filmComponent, RenderPosition.BEFOREEND);
       return;
     }
+
     if (this._filmsListContainer.getElement().contains(prevFilmCard.getElement())) {
       replace(this._filmComponent, prevFilmCard);
     }
     remove(prevFilmCard);
-
   }
 
   destroy() {
     remove(this._prevfilmCard);
 
   }
-
 
   _onEscKeyDown(evt) {
     if (evt.key === `Escape` || evt.key === `Esc`) {
@@ -56,7 +65,7 @@ export default class FilmCard {
       comment.remove();
     }
     document.body.removeChild(this._filmPopup.getElement());
-  }
+  };
 
   _openPopup() {
     document.body.classList.add(`hide-overflow`);
@@ -67,14 +76,51 @@ export default class FilmCard {
     }
     document.addEventListener(`keydown`, this._onEscKeyDown);
     document.querySelector(`.film-details__close-btn`).addEventListener(`click`, this._handleCloseClick);
-  }
+  };
 
   _handleOpenClick() {
     this._openPopup()
-  }
+  };
 
-  _handleCloseClick() {
-    this._closePopup()
-  }
+  _handleCloseClick(film) {
+    this._closePopup();
+    this._changeData(film);
+  };
+
+  _handleFavoriteClick() {
+    this._changeData(
+      Object.assign(
+        {},
+        this._filmCard,
+        {
+          isFavorite: !this._filmCard.isFavorite
+        }
+      )
+    )
+  };
+
+  _handleHistoryClick() {
+    this._changeData(
+      Object.assign(
+        {},
+        this._filmCard,
+        {
+          isWatched: !this._filmCard.isWatched
+        }
+      )
+    )
+  };
+
+  _handleWatchlistClick() {
+    this._changeData(
+      Object.assign(
+        {},
+        this._filmCard,
+        {
+          isToWatch: !this._filmCard.isToWatch
+        }
+      )
+    )
+  };
 
 }

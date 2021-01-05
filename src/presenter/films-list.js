@@ -4,9 +4,9 @@ import FilmsView from "../view/films.js";
 import FilmsListView from "../view/films-list.js";
 import FilmsTitleView from "../view/films-title.js";
 import FilmsListContainerView from "../view/films-list-container.js";
-import { updateItem } from "../utils/common.js";
+import {updateItem} from "../utils/common.js";
 import FilmsExtraView from "../view/films-extra.js";
-import { render, RenderPosition } from "../utils/render.js";
+import {render, RenderPosition} from "../utils/render.js";
 import ShowMoreButtonView from "../view/button-show-more.js";
 
 import NoFilmView from "../view/no-film.js";
@@ -19,6 +19,7 @@ export default class Board {
   constructor(boardContainer) {
     this._renderedFilmCount = COUNT_PER_STEP;
     this._boardContainer = boardContainer /* <main> */;
+    this._filmCardPresenter = {};
 
 
     this._menu = new MenuView();
@@ -31,13 +32,11 @@ export default class Board {
     this._noFilm = new NoFilmView();
     this._showMoreButton = new ShowMoreButtonView();
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
-    this._filmCardPresenter = {};
+    this._handleFilmCardChange = this._handleFilmCardChange.bind(this);
 
   }
 
   init(boardFilms) {
-    // Метод для инициализации (начала работы) модуля,
-    // малая часть текущей функции renderBoard в main.js
     this._boardFilms = boardFilms.slice();
     this._sourcedBoardFilms = boardFilms.slice();
 
@@ -54,8 +53,10 @@ export default class Board {
     render(this._boardContainer, this._sort, RenderPosition.BEFOREEND);
   }
 
+
+  // отрисовка карточки
   _renderFilmCard(filmCard) {
-    const filmCardPresenter = new FilmCardPresenter(this._filmsListContainer);
+    const filmCardPresenter = new FilmCardPresenter(this._filmsListContainer, this._handleFilmCardChange);
     filmCardPresenter.init(filmCard);
     this._filmCardPresenter[filmCard.id] = filmCardPresenter;
   }
