@@ -33,6 +33,7 @@ export default class Board {
     this._showMoreButton = new ShowMoreButtonView();
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
     this._handleFilmCardChange = this._handleFilmCardChange.bind(this);
+    this._handleModeChange = this._handleModeChange.bind(this);
 
   }
 
@@ -42,6 +43,12 @@ export default class Board {
 
     render(this._boardContainer, this._menu, RenderPosition.AFTERBEGIN);
     this._renderBoard();
+  }
+
+  _handleModeChange() {
+    Object
+      .values(this._filmCardPresenter)
+      .forEach((presenter) => presenter.resetView());
   }
 
   _renderFilmBox() {
@@ -56,7 +63,7 @@ export default class Board {
 
   // отрисовка карточки
   _renderFilmCard(filmCard) {
-    const filmCardPresenter = new FilmCardPresenter(this._filmsListContainer, this._handleFilmCardChange);
+    const filmCardPresenter = new FilmCardPresenter(this._filmsListContainer, this._handleFilmCardChange, this._handleModeChange);
     filmCardPresenter.init(filmCard);
     this._filmCardPresenter[filmCard.id] = filmCardPresenter;
   }

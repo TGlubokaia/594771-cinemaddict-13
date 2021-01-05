@@ -3,14 +3,21 @@ import FilmPopupView from "../view/film-popup.js";
 import FilmCommentView from "../view/film-comment.js";
 import FilmCardView from "../view/film-card.js";
 
+const Mode = {
+  DEFAULT: `DEFAULT`,
+  OPEN: `OPEN`
+};
+
 export default class FilmCard {
-  constructor(filmsListContainer, changeData) {
+  constructor(filmsListContainer, changeData, changeMode) {
     this._filmsListContainer = filmsListContainer;
     this._changeData = changeData;
+    this._changeMode = changeMode;
 
     this._filmComponent = null;
     this._filmPopup = null;
     this._filmCard = null;
+    this._mode = Mode.DEFAULT;
 
     this._handleOpenClick = this._handleOpenClick.bind(this);
     this._handleCloseClick = this._handleCloseClick.bind(this);
@@ -39,7 +46,7 @@ export default class FilmCard {
       return;
     }
 
-    if (this._filmsListContainer.getElement().contains(prevFilmCard.getElement())) {
+    if (this._mode === Mode.DEFAULT) {
       replace(this._filmComponent, prevFilmCard);
     }
     remove(prevFilmCard);
@@ -47,7 +54,12 @@ export default class FilmCard {
 
   destroy() {
     remove(this._prevfilmCard);
+  }
 
+  resetView() {
+    if (this._mode !== Mode.DEFAULT) {
+      this._closePopup();
+    }
   }
 
   _onEscKeyDown(evt) {
@@ -65,6 +77,7 @@ export default class FilmCard {
       comment.remove();
     }
     document.body.removeChild(this._filmPopup.getElement());
+    this._mode = Mode.DEFAULT;
   };
 
   _openPopup() {
@@ -76,6 +89,8 @@ export default class FilmCard {
     }
     document.addEventListener(`keydown`, this._onEscKeyDown);
     document.querySelector(`.film-details__close-btn`).addEventListener(`click`, this._handleCloseClick);
+    this._changeMode();
+    this._mode = Mode.OPEN;
   };
 
   _handleOpenClick() {
