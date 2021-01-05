@@ -53,7 +53,7 @@ export default class FilmCard {
   }
 
   destroy() {
-    remove(this._prevfilmCard);
+    remove(this._filmComponent);
   }
 
   resetView() {
@@ -67,7 +67,7 @@ export default class FilmCard {
       evt.preventDefault();
       this._closePopup();
     }
-  };
+  }
 
   _closePopup() {
     document.removeEventListener(`keydown`, this._onEscKeyDown);
@@ -78,7 +78,7 @@ export default class FilmCard {
     }
     document.body.removeChild(this._filmPopup.getElement());
     this._mode = Mode.DEFAULT;
-  };
+  }
 
   _openPopup() {
     document.body.classList.add(`hide-overflow`);
@@ -91,51 +91,50 @@ export default class FilmCard {
     document.querySelector(`.film-details__close-btn`).addEventListener(`click`, this._handleCloseClick);
     this._changeMode();
     this._mode = Mode.OPEN;
-  };
+  }
 
   _handleOpenClick() {
-    this._openPopup()
-  };
+    this._openPopup();
+  }
 
   _handleCloseClick(film) {
     this._closePopup();
     this._changeData(film);
-  };
+  }
 
   _handleFavoriteClick() {
     this._changeData(
-      Object.assign(
-        {},
-        this._filmCard,
-        {
-          isFavorite: !this._filmCard.isFavorite
-        }
-      )
-    )
-  };
+        Object.assign(
+            {},
+            this._filmCard,
+            {
+              isFavorite: !this._filmCard.isFavorite
+            }
+        )
+    );
+  }
 
   _handleHistoryClick() {
     this._changeData(
-      Object.assign(
-        {},
-        this._filmCard,
-        {
-          isWatched: !this._filmCard.isWatched
-        }
-      )
-    )
-  };
+        Object.assign(
+            {},
+            this._filmCard,
+            {
+              isWatched: !this._filmCard.isWatched
+            }
+        )
+    );
+  }
 
   _handleWatchlistClick() {
     this._changeData(
-      Object.assign(
-        {},
-        this._filmCard,
-        {
-          isToWatch: !this._filmCard.isToWatch
-        }
-      )
-    )
-  };
-
+        Object.assign(
+            {},
+            this._filmCard,
+            {
+              isToWatch: !this._filmCard.isToWatch
+            }
+        )
+    );
+  }
 }

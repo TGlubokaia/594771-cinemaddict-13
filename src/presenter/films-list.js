@@ -4,10 +4,11 @@ import FilmsView from "../view/films.js";
 import FilmsListView from "../view/films-list.js";
 import FilmsTitleView from "../view/films-title.js";
 import FilmsListContainerView from "../view/films-list-container.js";
-import {updateItem} from "../utils/common.js";
+import {updateItem, SortType} from "../utils/common.js";
 import FilmsExtraView from "../view/films-extra.js";
-import {render, RenderPosition} from "../utils/render.js";
+import {render, RenderPosition, remove} from "../utils/render.js";
 import ShowMoreButtonView from "../view/button-show-more.js";
+import {sortByDate, sortByRating} from "../utils/film-card";
 
 import NoFilmView from "../view/no-film.js";
 import FilmCardPresenter from "./film-card.js";
@@ -18,9 +19,9 @@ const COUNT_PER_STEP = 5;
 export default class Board {
   constructor(boardContainer) {
     this._renderedFilmCount = COUNT_PER_STEP;
-    this._boardContainer = boardContainer /* <main> */;
+    this._boardContainer = boardContainer; /* <main> */
     this._filmCardPresenter = {};
-
+    this._currentSortType = SortType.DEFAULT;
 
     this._menu = new MenuView();
     this._sort = new SortView();
@@ -35,6 +36,8 @@ export default class Board {
     this._handleFilmCardChange = this._handleFilmCardChange.bind(this);
     this._handleModeChange = this._handleModeChange.bind(this);
 
+    this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
+
   }
 
   init(boardFilms) {
@@ -44,7 +47,20 @@ export default class Board {
     render(this._boardContainer, this._menu, RenderPosition.AFTERBEGIN);
     this._renderBoard();
   }
+  _sortFilmCards(sortType) {
+    switch (sortType) {
+      case SortType.DATE:
+        this._boardFilms.sort(sortByDate);
+        break;
+      case SortType.RATING:
+        this._boardFilms.sort(sortByRating);
+        break;
+      default:
+        this._boardFilms = this._sourcedBoardFilms.slice();
+    }
 
+    this._currentSortType = sortType;
+  }
   _handleModeChange() {
     Object
       .values(this._filmCardPresenter)
@@ -56,10 +72,20 @@ export default class Board {
     render(this._films, this._filmsList, RenderPosition.BEFOREEND); // отрисовали элемент .films-list
   }
 
-  _renderSort() {
-    render(this._boardContainer, this._sort, RenderPosition.BEFOREEND);
+  _handleSortTypeChange(sortType) {
+    if (this._currentSortType === sortType) {
+      return;
+    }
+
+    this._sortFilmCards(sortType);
+    this._clearFilmsList();
+    this._renderFilmsList();
   }
 
+  _renderSort() {
+    render(this._boardContainer, this._sort, RenderPosition.BEFOREEND);
+    this._sort.setSortTypeChangeHandler(this._handleSortTypeChange);
+  }
 
   // отрисовка карточки
   _renderFilmCard(filmCard) {
@@ -86,7 +112,7 @@ export default class Board {
   _handleFilmCardChange(updatedFilmCard) {
     this._boardFilms = updateItem(this._boardFilms, updatedFilmCard);
     this._filmCardPresenter[updatedFilmCard.id].init(updatedFilmCard);
-    }
+  }
 
   _renderNoFilms() {
     render(this._filmsList, this._noFilm, RenderPosition.BEFOREEND);

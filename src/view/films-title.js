@@ -8,4 +8,4 @@ export default class FilmsTitle extends Abstract {
   getTemplate() {
     return createFilmsTitleTemplate();
   }
-} 
+}

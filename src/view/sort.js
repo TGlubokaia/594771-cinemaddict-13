@@ -1,30 +1,36 @@
 import Abstract from "./abstract.js";
-// import {generateSort} from "../mockup/sort-mockup.js";
-
-// const createSortItemLink = function (sortItem) {
-//   const {text} = sortItem;
-//   return `<li><a href="#" class="sort__button ${text === `Sort by default` ? `sort__button--active` : ``}">${text}</a></li>`
-// };
-
-// const createSortTemplate = function () {
-//   // let sorts = generateSort();
-//   // return `<ul class="sort">
-//   //   ${sorts.map((sort) => createSortItemLink(sort)).join(``)}
-//   //   </ul>`;
-// };
-
+import {SortType} from "../utils/common.js";
 
 
 const createSortTemplate = function () {
   return `<ul class="sort">
-  <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-  <li><a href="#" class="sort__button">Sort by date</a></li>
-  <li><a href="#" class="sort__button">Sort by rating</a></li>
+  <li><a href="#" class="sort__button sort__button--active" data-sort-type="${SortType.DEFAULT}">Sort by default</a></li>
+  <li><a href="#" class="sort__button" data-sort-type="${SortType.DATE}">Sort by date</a></li>
+  <li><a href="#" class="sort__button" data-sort-type="${SortType.RATING}">Sort by rating</a></li>
 </ul>`;
 };
 
 export default class Sort extends Abstract {
+  constructor() {
+    super();
+
+    this._sortTypeChangeHandler = this._sortTypeChangeHandler.bind(this);
+  }
   getTemplate() {
     return createSortTemplate();
   }
-};
+
+  _sortTypeChangeHandler(evt) {
+    if (evt.target.tagName !== `A`) {
+      return;
+    }
+
+    evt.preventDefault();
+    this._callback.sortTypeChange(evt.target.dataset.sortType);
+  }
+
+  setSortTypeChangeHandler(callback) {
+    this._callback.sortTypeChange = callback;
+    this.getElement().addEventListener(`click`, this._sortTypeChangeHandler);
+  }
+}

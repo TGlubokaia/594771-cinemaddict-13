@@ -37,7 +37,7 @@ export const remove = (component) => {
 };
 
 export const replace = (newChild, oldChild) => {
-    if (oldChild instanceof Abstract) {
+  if (oldChild instanceof Abstract) {
     oldChild = oldChild.getElement();
   }
 

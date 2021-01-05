@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import {getRandomNumber} from "../utils/common.js";
 import {getRandomElement} from "../utils/common.js";
 import {descriptionSentences} from "./data-mockup.js";
@@ -62,7 +61,6 @@ export const generateFilmCard = function () {
     originaltitle: getRandomElement(originalTitles),
     rating: getRandomElement(ratings),
     agerating: getRandomElement(ageRating),
-    releaseyear: dayjs(getRandomElement(releaseDate)).format(`YYYY`),
     date: getRandomElement(releaseDate),
     commentdate: getRandomElement(commentDate),
     duration: getRandomElement(duration),
