@@ -41,8 +41,8 @@ export default class Board {
   }
 
   init(boardFilms) {
-    this._boardFilms = boardFilms.slice();
-    this._sourcedBoardFilms = boardFilms.slice();
+    this._boardFilms = [...boardFilms];
+    this._sourcedBoardFilms = [...boardFilms];
 
     render(this._boardContainer, this._menu, RenderPosition.AFTERBEGIN);
     this._renderBoard();
@@ -56,7 +56,7 @@ export default class Board {
         this._boardFilms.sort(sortByRating);
         break;
       default:
-        this._boardFilms = this._sourcedBoardFilms.slice();
+        this._boardFilms = [...this._sourcedBoardFilms];
     }
 
     this._currentSortType = sortType;
@@ -140,7 +140,7 @@ export default class Board {
 
   _renderBoard() {
 
-    if (this._boardFilms.length === 0) {
+    if (!this._boardFilms.length) {
       this._renderFilmBox();
       this._renderNoFilms();
       return;

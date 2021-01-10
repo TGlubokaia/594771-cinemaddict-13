@@ -41,7 +41,7 @@ export default class FilmCard {
     this._filmComponent.setHistoryClickHandler(this._handleHistoryClick); // фильтр
     this._filmComponent.setWatchlistClickHandler(this._handleWatchlistClick); // фильтр
 
-    if (prevFilmCard === null) {
+    if (!prevFilmCard) {
       render(this._filmsListContainer, this._filmComponent, RenderPosition.BEFOREEND);
       return;
     }
