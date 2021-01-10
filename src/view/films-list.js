@@ -1,11 +1,11 @@
 import Abstract from "./abstract.js";
 
-const createFilmListTemplate = function () {
-  return `<div class="films-list__container"> </div>`;
+const createFilmsListTemplate = function () {
+  return `<section class="films-list"></section>`;
 };
 
-export default class FilmsListContainer extends Abstract {
+export default class FilmsList extends Abstract {
   getTemplate() {
-    return createFilmListTemplate();
+    return createFilmsListTemplate();
   }
 }

@@ -134,8 +134,43 @@ export default class FilmPopup extends Abstract {
   constructor(film) {
     super();
     this._film = film;
+
+    this._favoriteClickHandler = this._favoriteClickHandler.bind(this); // фильтр
+    this._historyClickHandler = this._historyClickHandler.bind(this); // фильтр
+    this._watchlistClickHandler = this._watchlistClickHandler.bind(this); // фильтр
+
   }
   getTemplate() {
     return createFilmDetailsTemplate(this._film);
+  }
+
+  _favoriteClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.favoriteClick();
+  }
+
+  _historyClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.historyClick();
+  }
+
+  _watchlistClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.watchlistClick();
+  }
+
+  _setFavoriteClickHandler(callback) {
+    this._callback.favoriteClick = callback;
+    this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, this._favoriteClickHandler);
+  }
+
+  _setHistoryClickHandler(callback) {
+    this._callback.historyClick = callback;
+    this.getElement().querySelector(`.film-details__control-label--watched`).addEventListener(`click`, this._historyClickHandler);
+  }
+
+  _setWatchlistClickHandler(callback) {
+    this._callback.watchlistClick = callback;
+    this.getElement().querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, this._watchlistClickHandler);
   }
 }
