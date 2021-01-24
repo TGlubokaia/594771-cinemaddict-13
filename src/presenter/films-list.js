@@ -47,6 +47,7 @@ export default class Board {
     render(this._boardContainer, this._menu, RenderPosition.AFTERBEGIN);
     this._renderBoard();
   }
+
   _sortFilmCards(sortType) {
     switch (sortType) {
       case SortType.DATE:
@@ -61,6 +62,7 @@ export default class Board {
 
     this._currentSortType = sortType;
   }
+
   _handleModeChange() {
     Object
       .values(this._filmCardPresenter)
@@ -122,6 +124,7 @@ export default class Board {
     render(this._filmsList, this._showMoreButton, RenderPosition.BEFOREEND);
     this._showMoreButton.setBtnClickHandler(this._handleShowMoreButtonClick);
   }
+  
   _handleShowMoreButtonClick() {
     this._renderFilms(this._renderedFilmCount, this._renderedFilmCount + COUNT_PER_STEP);
     this._renderedFilmCount += COUNT_PER_STEP;

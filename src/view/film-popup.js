@@ -10,7 +10,7 @@ const generateGenre = function (genreArr) {
 };
 
 const createFilmDetailsTemplate = function (card) {
-  const {title, originaltitle, rating, agerating, date, duration, genre, url, country, description, comments, director, writters, actors} = card;
+  const {title, originaltitle, rating, agerating, date, duration, genre, url, country, description, comments, director, writters, actors, isFavorite, isToWatch, isWatched} = card;
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="film-details__top-container">
@@ -76,13 +76,13 @@ const createFilmDetailsTemplate = function (card) {
       </div>
 
       <section class="film-details__controls">
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${isToWatch ? `checked` : ``}>
         <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${isWatched ? `checked` : ``}>
         <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
 
-        <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
+        <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${isFavorite ? `checked` : ``}>
         <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
       </section>
     </div>
@@ -159,17 +159,17 @@ export default class FilmPopup extends Abstract {
     this._callback.watchlistClick();
   }
 
-  _setFavoriteClickHandler(callback) {
+  setFavoriteClickHandler(callback) {
     this._callback.favoriteClick = callback;
     this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, this._favoriteClickHandler);
   }
 
-  _setHistoryClickHandler(callback) {
+  setHistoryClickHandler(callback) {
     this._callback.historyClick = callback;
     this.getElement().querySelector(`.film-details__control-label--watched`).addEventListener(`click`, this._historyClickHandler);
   }
 
-  _setWatchlistClickHandler(callback) {
+  setWatchlistClickHandler(callback) {
     this._callback.watchlistClick = callback;
     this.getElement().querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, this._watchlistClickHandler);
   }
