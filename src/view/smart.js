@@ -21,7 +21,7 @@ export default class Smart extends Abstract {
       return;
     }
 
-    this.updateElement();
+    // this.updateElement();
   }
 
   updateElement() {
@@ -39,4 +39,11 @@ export default class Smart extends Abstract {
   restoreHandlers() {
     throw new Error(`Abstract method not implemented: resetHandlers`);
   }
+
+
+
+
+
+
+
 }

@@ -53,3 +53,9 @@ export const replace = (newChild, oldChild) => {
 
   parent.replaceChild(newChild, oldChild);
 };
+
+
+export const Mode = {
+  DEFAULT: `DEFAULT`,
+  OPEN: `OPEN`
+};

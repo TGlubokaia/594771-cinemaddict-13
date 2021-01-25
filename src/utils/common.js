@@ -42,3 +42,12 @@ export const SortType = {
   DATE: `date`,
   RATING: `rating`
 };
+
+export const EMOJIS = [
+  `smile`,
+  `sleeping`,
+  `puke`,
+  `angry` 
+]
+
+
