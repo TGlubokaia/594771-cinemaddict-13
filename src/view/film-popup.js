@@ -20,7 +20,7 @@ const createFilmDetailsTemplate = function (card) {
 
   const isWatchedChecked = isWatched ? `checked` : ``;
 
-  
+
 
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
@@ -106,29 +106,28 @@ const createFilmDetailsTemplate = function (card) {
 export default class FilmPopup extends SmartView {
   constructor(film) {
     super();
-    // this._data = FilmPopup.parseElementToData(film);
-    this._film = film;
-    this._favoriteClickHandler = this._favoriteClickHandler.bind(this); 
-    this._historyClickHandler = this._historyClickHandler.bind(this); 
-    this._watchlistClickHandler = this._watchlistClickHandler.bind(this); 
+    this._data = FilmPopup.parseElementToData(film);
+    this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
+    this._historyClickHandler = this._historyClickHandler.bind(this);
+    this._watchlistClickHandler = this._watchlistClickHandler.bind(this);
+    
 
   }
 
-  // reset(film) {
-  //   this.updateData(
-  //     FilmPopup.parseElementToData(film)
-  //   );
-  // }
+  reset(film) {
+    this.updateData(
+      FilmPopup.parseElementToData(film)
+    );
+  }
 
   getTemplate() {
-    return createFilmDetailsTemplate(this._film);
+    return createFilmDetailsTemplate(this._data);
   }
 
   restoreHandlers() {
     this.setFavoriteClickHandler(this._callback.favoriteClick);
     this.setHistoryClickHandler(this._callback.historyClick);
     this.setWatchlistClickHandler(this._callback.watchlistClick);
-
   }
 
 
@@ -163,5 +162,26 @@ export default class FilmPopup extends SmartView {
     this.getElement().querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, this._watchlistClickHandler);
   }
 
+
+
+  static parseElementToData(element) {
+    return Object.assign(
+      {},
+      element, 
+
+    )
+  }
+
+  static parseDataToElement(data) {
+    data = Object.assign({}, data);
+
+    // if () {
+    // }
+
+    delete data.isDueDate;
+
+
+    return data;
+  }
 
 }

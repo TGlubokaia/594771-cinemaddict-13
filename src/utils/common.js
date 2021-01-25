@@ -43,11 +43,12 @@ export const SortType = {
   RATING: `rating`
 };
 
-export const EMOJIS = [
-  `smile`,
-  `sleeping`,
-  `puke`,
-  `angry` 
-]
+export const EMOJIS = {
+  smile: false,
+  sleeping: false,
+  puke: false,
+  angry: false
+}
+
 
 
