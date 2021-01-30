@@ -45,7 +45,6 @@ const createFilmCommentsBlockTemplate = function (comments, selectedEmoji, emoji
     </ul>
 
     <div class="film-details__new-comment">
-      ${emojiComponent.getTemplate()}
 
       <label class="film-details__comment-label">
         <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
@@ -67,7 +66,9 @@ export default class FilmComment extends SmartView {
     this._data = FilmComment.parseElementToData(comments); // backup
     this._selectedEmoji = null;
     this._emojiComponent = new FilmNewComment(this._selectedEmoji);
-    this._emojiData = Object.assign({}, this._emojiComponent); // backup
+    this._emojiData = this._emojiComponent._data;
+    console.log(this._emojiComponent);
+
    
     // this._descriptionInputHandler = this._descriptionInputHandler.bind(this);
     this._emojiChangeHandler = this._emojiChangeHandler.bind(this);
@@ -81,7 +82,9 @@ export default class FilmComment extends SmartView {
   // }
 
   getTemplate() {
-    return createFilmCommentsBlockTemplate(this._comments, this._selectedEmoji, this._emojiComponent);
+    const filmCommentBlock = createFilmCommentsBlockTemplate(this._comments, this._selectedEmoji, this._emojiComponent);
+    render(filmCommentBlock.getElement().querySelector(`.film-details__new-comment`), this._emojiComponent, RenderPosition.AFTERBEGIN)
+    return filmCommentBlock;
   }
 
   _setInnerHandlers() {
@@ -123,7 +126,8 @@ export default class FilmComment extends SmartView {
     evt.preventDefault();
     const radio = Array.from(this.getElement().querySelectorAll(`.film-details__emoji-item`)).find((item) => item.checked);
     this._selectedEmoji = radio.value;
-
+    this._emojiComponent.setNewData(this._selectedEmoji);
+    
     this._emojiComponent.updateData({_selectedEmoji: this._selectedEmoji}, this._emojiData);
 
   }
